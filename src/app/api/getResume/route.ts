@@ -1,4 +1,8 @@
-import { resumeData } from "@/app/lib/resumeData";
+import {
+  PRIVACY_PASSWORD,
+  privacyConfig,
+  resumeData,
+} from "@/app/lib/resumeData";
 import { ResumeData } from "@/app/lib/type";
 import { NextResponse } from "next/server";
 
@@ -8,25 +12,22 @@ type FieldsToMask = {
 };
 
 // 定义掩码配置类型
-type MaskConfig = {
-  [field: string]: {
-    unauthenticated: string;
-  };
-};
+type MaskConfig = Record<string, { unauthenticated?: string }>;
+
 /**
- * 对数据进行隐私保护处理
- * @param {Object} data - 原始数据对象
- * @param {Boolean} isAuthenticated - 是否已认证
- * @param {Object} fieldsToMask - 需要掩码的字段配置，格式为 {section: [fields]}
- * @param {String} maskConfig - 掩码配置对象
- * @returns {Object} - 处理后的数据
+ *
+ * @param data ResumeData 需要掩码的数据
+ * @param isAuth 是否认证状态
+ * @param fieldsToMask 需要掩码的字段配置
+ * @param maskConfig 掩码配置
+ * @returns
  */
-function maskPrivateData<T extends object>(
+function maskPrivateData(
   data: ResumeData,
   isAuth: boolean,
   fieldsToMask: FieldsToMask = {},
   maskConfig: MaskConfig = {}
-) {
+): ResumeData {
   if (isAuth) {
     return data;
   }
@@ -50,15 +51,56 @@ function maskPrivateData<T extends object>(
       // 处理其他类型
       else {
         fields.forEach((field) => {
-          if (maskedData[section as keyof ResumeData]![field] !== undefined) {
+          const sectionKey = section as keyof ResumeData;
+          if (maskedData[sectionKey] && field in maskedData[sectionKey]) {
+            const value =
+              maskedData[sectionKey][
+                field as keyof (typeof maskedData)[typeof sectionKey]
+              ];
+            if (typeof value === "string") {
+              maskedData[sectionKey][
+                field as keyof (typeof maskedData)[typeof sectionKey]
+              ] = (
+                maskConfig[field as keyof MaskConfig]?.unauthenticated
+                  ? maskConfig[field as keyof MaskConfig]?.unauthenticated
+                  : "*".repeat(
+                      (
+                        maskedData[sectionKey][
+                          field as keyof (typeof maskedData)[typeof sectionKey]
+                        ] as string
+                      ).length
+                    )
+              ) as never;
+            }
           }
         });
       }
     }
   });
+  return maskedData;
 }
 
-export async function GET() {
+// 定义需要掩码的字段配置
+const fieldsToMask = {
+  personalInfo: ["age", "name", "phone"],
+  education: ["school", "major", "verificationCode", "period"],
+  workExperience: ["company", "period"],
+};
+
+export async function POST(request: Request) {
+  // 获取请求体
+  const body = await request.json();
+  const { password } = body;
+  console.log("请求体：", password);
+  const isAuthenticated = password === PRIVACY_PASSWORD;
+  console.log("是否认证：", isAuthenticated);
+
   //   TODO
-  return NextResponse.json({ data: resumeData });
+  const maskedResume = maskPrivateData(
+    resumeData,
+    isAuthenticated,
+    fieldsToMask,
+    privacyConfig.maskText
+  );
+  return NextResponse.json({ data: maskedResume });
 }
