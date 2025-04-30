@@ -18,6 +18,8 @@ export const resumeData: ResumeData = {
     "对前端工程化有深入研究，熟悉webpack、vite等构建工具的配置和优化",
     "热爱开源，在GitHub上维护多个开源项目，积极参与技术社区讨论和分享",
   ],
+
+  skillAdvantage: [],
   workExperience: [
     {
       period: "2021-03 ~ 至今",
@@ -102,6 +104,14 @@ export const privacyConfig: PrivacyConfig = {
     name: {
       authenticated: "真实姓名",
       unauthenticated: "demo_username",
+    },
+    company: {
+      authenticated: "真实公司",
+      unauthenticated: "xxx公司",
+    },
+    school: {
+      authenticated: "真实大学",
+      unauthenticated: "xxx大学",
     },
   },
 };

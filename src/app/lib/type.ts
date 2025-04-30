@@ -27,7 +27,11 @@ interface ResumeData {
     /** @description 微信二维码图片URL */
     qrCode?: string;
   };
-
+  /**
+   * 技能优势
+   * @description 技能优势信息列表
+   */
+  skillAdvantage?: string[];
   /**
    * 自我评价
    * @description 展示个人优势和特点的陈述列表
@@ -116,6 +120,22 @@ interface PrivacyConfig {
      */
     name?: {
       /** @description 已认证状态下显示的姓名 */
+      authenticated?: string;
+      /** @description 未认证状态下显示的掩码名称 */
+      unauthenticated?: string;
+    };
+    /**
+     * 公司掩码配置
+     * @description 控制公司显示的不同状态
+     */
+    company: {
+      /** @description 已认证状态下显示的公司 */
+      authenticated?: string;
+      /** @description 未认证状态下显示的掩码名称 */
+      unauthenticated?: string;
+    };
+    school: {
+      /** @description 已认证状态下显示 */
       authenticated?: string;
       /** @description 未认证状态下显示的掩码名称 */
       unauthenticated?: string;

@@ -84,7 +84,7 @@ function maskPrivateData(
 const fieldsToMask = {
   personalInfo: ["age", "name", "phone"],
   education: ["school", "major", "verificationCode", "period"],
-  workExperience: ["company", "period"],
+  workExperience: ["company"],
 };
 
 export async function POST(request: Request) {

@@ -6,7 +6,7 @@ interface ResumeState {
   resumeData: ResumeData | null;
   isAuth: boolean;
   loading: boolean;
-  error: Error | null;
+  error: object | string | null;
   fetchResumeData: (password?: string) => Promise<void>;
   clearAuth: () => void;
 }
@@ -52,7 +52,7 @@ const useResumeStore = create<ResumeState>()(
           } catch (error) {
             set({
               loading: false,
-              error: error,
+              error: error || "获取错误",
             });
           }
         },
