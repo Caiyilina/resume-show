@@ -96,11 +96,19 @@ export async function POST(request: Request) {
   console.log("是否认证：", isAuthenticated);
 
   //   TODO
-  const maskedResume = maskPrivateData(
-    resumeData,
-    isAuthenticated,
-    fieldsToMask,
-    privacyConfig.maskText
-  );
-  return NextResponse.json({ data: maskedResume });
+  try {
+    const maskedResume = maskPrivateData(
+      resumeData,
+      isAuthenticated,
+      fieldsToMask,
+      privacyConfig.maskText
+    );
+    return NextResponse.json({
+      data: maskedResume,
+      code: 200,
+      isAuthenticated,
+    });
+  } catch (error) {
+    return NextResponse.json({ message: error, code: 400, isAuthenticated });
+  }
 }
