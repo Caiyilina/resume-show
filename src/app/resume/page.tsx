@@ -7,6 +7,7 @@ import {
   ChatBubbleLeftRightIcon,
   WrenchIcon,
   CodeBracketIcon,
+  CircleStackIcon,
 } from "@heroicons/react/24/outline";
 import { SectionCard } from "../component/ResumeUI";
 
@@ -75,6 +76,14 @@ export default function ResumePage() {
 
       {/* 主体内容容器 */}
       <div className="mx-auto mt-8 max-w-4xl grid gap-6">
+        {/* 技能优势 */}
+        <SectionCard title="技能优势" icon={<CircleStackIcon />}>
+          <ul className="list-disc space-y-1 pl-6 text-gray-700">
+            {resumeData?.skillAdvantage?.map((skillItem, index) => (
+              <li key={index}>{skillItem}</li>
+            ))}
+          </ul>
+        </SectionCard>
         {/* 工作经历模块 */}
         <SectionCard title="工作经历" icon={<WrenchIcon />}>
           {resumeData?.workExperience?.map((exp, index) => (

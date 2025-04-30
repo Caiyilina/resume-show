@@ -19,7 +19,13 @@ export const resumeData: ResumeData = {
     "热爱开源，在GitHub上维护多个开源项目，积极参与技术社区讨论和分享",
   ],
 
-  skillAdvantage: [],
+  skillAdvantage: [
+    "精通Vue3全家桶（Vue Router/Pinia/Vite）及TypeScript开发，熟悉Composition API和响应式原理",
+    "熟练掌握前端工程化实践，具有Webpack/Vite构建优化经验，能有效提升构建效率30%以上",
+    "具备Node.js全栈开发能力，熟悉Nest.js框架及RESTful API设计，有多个中后台项目实战经验",
+    "擅长性能优化，掌握懒加载、代码分割、缓存策略等优化手段，能将首屏加载时间降低40%-60%",
+    "熟悉跨平台开发方案，具有uni-app小程序开发经验，能实现多端代码复用和平台特性适配",
+  ],
   workExperience: [
     {
       period: "2021-03 ~ 至今",
