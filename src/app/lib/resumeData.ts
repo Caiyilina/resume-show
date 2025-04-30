@@ -11,6 +11,7 @@ export const resumeData: ResumeData = {
     wechat: "demo_zhang",
     email: "demo@example.com",
     qrCode: "https://placehold.co/300x300?text=WeChat+QR",
+    siteUrl: "https://github.com",
   },
   selfEvaluation: [
     "5年前端开发经验，精通Vue技术栈，参与过多个大型企业级应用的开发和维护",

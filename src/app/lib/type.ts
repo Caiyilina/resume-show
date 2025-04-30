@@ -10,6 +10,7 @@ interface ResumeData {
   personalInfo: {
     /** @description 姓名（需隐私保护处理） */
     name?: string;
+
     /** @description 求职职位 */
     jobTitle?: string;
     /** @description 意向工作城市 */
@@ -26,6 +27,10 @@ interface ResumeData {
     email?: string;
     /** @description 微信二维码图片URL */
     qrCode?: string;
+    /**
+     * @description 个人站点
+     */
+    siteUrl?: string;
   };
   /**
    * 技能优势

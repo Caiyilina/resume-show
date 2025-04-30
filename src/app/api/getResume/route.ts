@@ -82,7 +82,7 @@ function maskPrivateData(
 
 // 定义需要掩码的字段配置
 const fieldsToMask = {
-  personalInfo: ["age", "name", "phone"],
+  personalInfo: ["name", "phone"],
   education: ["school", "major", "verificationCode", "period"],
   workExperience: ["company"],
 };

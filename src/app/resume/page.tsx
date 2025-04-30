@@ -8,6 +8,7 @@ import {
   WrenchIcon,
   CodeBracketIcon,
   CircleStackIcon,
+  LinkIcon,
 } from "@heroicons/react/24/outline";
 import { SectionCard } from "../component/ResumeUI";
 
@@ -38,6 +39,10 @@ export default function ResumePage() {
           <div className="w-full md:w-1/2 flex flex-col md:items-end">
             <div className="w-full md:w-auto space-y-2">
               <div className="w-full md:w-auto space-y-2">
+                <div className="flex items-center space-x-2 text-gray-600">
+                  <LinkIcon className="h-5 w-5" />
+                  <span>{resumeData?.personalInfo?.siteUrl}</span>
+                </div>
                 <div className="flex items-center space-x-2 text-gray-600">
                   <PhoneIcon className="h-5 w-5" />
                   <span>{resumeData?.personalInfo?.phone}</span>
