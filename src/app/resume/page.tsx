@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useResumeStore from "../store/resume";
 import {
   PhoneIcon,
@@ -9,18 +9,87 @@ import {
   CodeBracketIcon,
   CircleStackIcon,
   LinkIcon,
+  QrCodeIcon,
 } from "@heroicons/react/24/outline";
 import { SectionCard } from "../component/ResumeUI";
+import { Tooltip } from "antd";
+import Image from "next/image";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export default function ResumePage() {
   const { resumeData, isAuth, error, fetchResumeData } = useResumeStore();
-  const [showQrCode, setShowQrCode] = useState(false);
+  const resumeRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     fetchResumeData();
     console.log("获取简历", resumeData);
   }, []);
+  const handleViewAll = useCallback(() => {
+    console.log("查看完整信息");
+  }, []);
+  const handleExportPDF = useCallback(async () => {
+    const resumeContainer = resumeRef.current;
+    const privacySection = document.querySelector(
+      "#privacy-section"
+    ) as HTMLElement;
+    const originalDisplay = privacySection?.style?.display;
+    try {
+      if (resumeContainer && privacySection) {
+        privacySection.style.display = "none";
+
+        const pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "px",
+          format: "a4",
+        });
+        // 获取页面尺寸并设置较小的边距
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 10; // 减小边距
+
+        // 计算实际内容区域
+        const contentWidth = pageWidth - 2 * margin;
+        const contentHeight = pageHeight - 2 * margin;
+        const canvas = await html2canvas(resumeContainer, {
+          allowTaint: true,
+          scale: 2,
+          useCORS: true,
+          backgroundColor: "#ffffff",
+        });
+        // 获取canvas尺寸
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+        // 计算缩放比例，增加填充比例
+        const scale = Math.min(
+          (contentWidth / canvasWidth) * 1.3, // 增加30%的填充比例
+          (contentHeight / canvasHeight) * 1.3
+        );
+        // 计算居中位置
+        const x = margin;
+        const y = margin;
+        const imgData = canvas.toDataURL("image/png", 1.0);
+
+        pdf.addImage(
+          imgData,
+          "JPEG",
+          x,
+          y,
+          canvasWidth * scale,
+          canvasHeight * scale
+        );
+        pdf.save(`${resumeData?.personalInfo?.name || "简历"}.pdf`);
+        console.log("originalDisplay", originalDisplay);
+
+        privacySection.style.display = originalDisplay;
+      }
+    } catch (error) {
+      console.error("导出失败", error);
+    } finally {
+      privacySection.style.display = originalDisplay;
+    }
+  }, []);
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div ref={resumeRef} className="min-h-screen bg-gray-50 p-8">
       {/* 顶部个人信息区域 */}
       <div className="mx-auto max-w-4xl rounded-2xl bg-white p-8 shadow-lg">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
@@ -54,25 +123,45 @@ export default function ResumePage() {
                 <div className="flex items-center space-x-2 text-gray-600">
                   <ChatBubbleLeftRightIcon className="h-5 w-5" />
                   <span>{resumeData?.personalInfo?.wechat}</span>
+                  {/* 微信二维码 */}
+                  <Tooltip
+                    color="#fff"
+                    title={
+                      <div className="relative group">
+                        <img
+                          src={
+                            resumeData?.personalInfo.qrCode ||
+                            "/public/vercel.svg"
+                          }
+                          alt="微信二维码"
+                          className="w-32 h-32 rounded-lg border-2 border-blue-100 transition-transform group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-20 transition-opacity rounded-lg" />
+                      </div>
+                    }
+                  >
+                    <span className="block cursor-pointer">
+                      <QrCodeIcon className="h-5 w-5 text-blue-500" />
+                    </span>
+                  </Tooltip>
                 </div>
               </div>
-              <div className="flex flex-col items-center space-y-4 w-full md:w-auto">
+              <div
+                id="privacy-section"
+                className="flex flex-col md:flex-row items-stretch md:items-center  justify-center w-full md:w-auto gap-1 md:gap-2"
+              >
                 <button
-                  onClick={() => setShowQrCode(!showQrCode)}
-                  className="w-full md:w-auto px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  onClick={handleViewAll}
+                  className="h-10 px-4 py-2  bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                 >
-                  {showQrCode ? "隐藏联系方式" : "查看完整信息"}
+                  查看完整信息
                 </button>
-                {showQrCode && (
-                  <div className="relative group">
-                    <img
-                      src={resumeData?.personalInfo?.qrCode}
-                      alt="微信二维码"
-                      className="w-32 h-32 rounded-lg border-2 border-blue-100 transition-transform group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-20 transition-opacity rounded-lg" />
-                  </div>
-                )}
+                <button
+                  onClick={handleExportPDF}
+                  className="h-10 px-4 py-2  bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                >
+                  导出PDF
+                </button>
               </div>
             </div>
           </div>

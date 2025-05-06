@@ -11,7 +11,7 @@ const SectionCard = ({
 }) => (
   <div className="rounded-xl bg-white p-6 shadow-md">
     <div className="mb-4 flex text-base md:text-lg items-center gap-x-3">
-      <div className="h-5 w-5 md:h-4 md:w-4 text-blue-400">
+      <div className="h-6 w-6 md:h-8 md:w-8 text-blue-400">
         {icon ? icon : <H1Icon />}
       </div>
       <h2 className="text-xl md:text-2xl font-bold text-gray-900">{title}</h2>
