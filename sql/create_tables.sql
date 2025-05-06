@@ -51,6 +51,17 @@ CREATE TABLE project_experience (
     FOREIGN KEY (resume_id) REFERENCES resumes(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- 个人项目表
+CREATE TABLE personal_projects (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    resume_id INT NOT NULL,
+    name VARCHAR(100) COMMENT '项目名称',
+    description TEXT COMMENT '项目描述',
+    url VARCHAR(255) COMMENT '项目链接',
+    tech_stack VARCHAR(200) COMMENT '技术栈', 
+    FOREIGN KEY (resume_id) REFERENCES resumes(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- 教育背景表
 CREATE TABLE education (
     id INT PRIMARY KEY AUTO_INCREMENT,

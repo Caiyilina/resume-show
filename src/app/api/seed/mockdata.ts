@@ -37,6 +37,7 @@ const selfEvaluation = [
 ];
 const workExperience = [
   {
+    id: 1,
     period: "2021-03 ~ 至今",
     company: "科技创新有限公司",
     position: "高级前端开发工程师",
@@ -48,6 +49,7 @@ const workExperience = [
     ],
   },
   {
+    id: 2,
     period: "2018-07 ~ 2021-02",
     company: "互联网科技有限公司",
     position: "前端开发工程师",
@@ -60,6 +62,7 @@ const workExperience = [
 ];
 const projectExperience = [
   {
+    id: 1,
     name: "企业级中台管理系统",
     techStack: "Vue3、TypeScript、Element Plus、Vite",
     description:
@@ -73,6 +76,7 @@ const projectExperience = [
     ],
   },
   {
+    id: 2,
     name: "电商平台小程序",
     techStack: "uni-app、Vue3、TypeScript",
     description: "跨平台电商小程序，支持微信、支付宝等多个平台。",
@@ -86,24 +90,29 @@ const projectExperience = [
 ];
 const personalProjects = [
   {
+    id: 1,
     name: "Vue组件库",
     description:
       "一个基于Vue3的现代化UI组件库，包含30+常用组件，支持按需引入和主题定制。",
     url: "https://github.com/demo/vue-components",
+    techStack: "Vue3、TypeScript、Element Plus",
     screenshots: [
       "https://placehold.co/800x400?text=Component+Demo+1",
       "https://placehold.co/800x400?text=Component+Demo+2",
     ],
   },
   {
+    id: 2,
     name: "在线Markdown编辑器",
     description: "基于Vue3开发的在线Markdown编辑器，支持实时预览和主题切换",
+    techStack: "Vue3、TypeScript、Element Plus",
     url: "https://github.com/demo/markdown-editor",
     screenshots: [],
   },
 ];
 const education = [
   {
+    id: 1,
     period: "2014-09 ~ 2018-06",
     school: "示例大学",
     major: "计算机科学与技术（本科）",
@@ -112,6 +121,7 @@ const education = [
   },
 ];
 const privacyConfig = {
+  id: 1,
   password: "demo123",
   maskText: {
     name: {
