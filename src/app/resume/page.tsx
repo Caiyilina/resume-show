@@ -14,7 +14,8 @@ import {
 import { SectionCard } from "../component/ResumeUI";
 import { Tooltip } from "antd";
 import Image from "next/image";
-import html2canvas from "html2canvas";
+// import html2canvas from "html2canvas";
+import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 
 export default function ResumePage() {
