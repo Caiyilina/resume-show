@@ -11,36 +11,58 @@ import {
   LinkIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
+import "@ant-design/v5-patch-for-react-19";
 import { SectionCard } from "../component/ResumeUI";
-import { Input, Modal, Tooltip } from "antd";
+import { Input, message, Modal, Tooltip } from "antd";
 // import html2canvas from "html2canvas";
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 
 export default function ResumePage() {
-  const { resumeData, isAuth, error, fetchResumeData } = useResumeStore();
+  const { resumeData, error, fetchResumeData } = useResumeStore();
+  const [isAuth, setIsAuth] = useState(false);
   const resumeRef = useRef<HTMLDivElement>(null);
   // 是否展示对话框 输入密码
   const [showModal, setShowModal] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [inputPwd, setInputPwd] = useState("");
-
+  const [messageApi, contextHolder] = message.useMessage();
   useEffect(() => {
     fetchResumeData();
     console.log("获取简历", resumeData);
   }, []);
+  useEffect(() => {
+    console.log("监听isAuth", isAuth, confirmLoading);
+    if (!confirmLoading && !isAuth) return;
+    if (isAuth) {
+      console.log("验证成功message");
+
+      messageApi.success({
+        content: "验证成功",
+        key: "auth",
+      });
+      setShowModal(false);
+      setConfirmLoading(false);
+      setInputPwd("");
+    } else {
+      console.log("验证失败message");
+      messageApi.error({
+        content: "验证失败",
+        key: "auth",
+      });
+      setConfirmLoading(false);
+    }
+  }, [isAuth, confirmLoading, messageApi]);
   const handleOk = async () => {
-    // setShowModal(false);
-    // fetchResumeData()
     setConfirmLoading(true);
-    console.log("密码--", inputPwd);
     const res = await fetchResumeData(inputPwd);
     console.log("验证结果--", res);
-
-    setConfirmLoading(false);
+    setIsAuth(() => res?.isAuthenticated || false);
   };
   const handleCancel = () => {
+    console.log("取消验证");
     setShowModal(false);
+    setConfirmLoading(false);
   };
 
   const handleExportPDF = useCallback(async () => {
@@ -106,6 +128,7 @@ export default function ResumePage() {
   }, []);
   return (
     <>
+      {contextHolder}
       <div ref={resumeRef} className="min-h-screen bg-gray-50 p-8">
         {/* 顶部个人信息区域 */}
         <div className="mx-auto max-w-4xl rounded-2xl bg-white p-8 shadow-lg">
@@ -246,7 +269,6 @@ export default function ResumePage() {
         <Input.Password
           type="password"
           value={inputPwd}
-          show-password
           placeholder="请输入密码"
           onChange={(e) => {
             setInputPwd(e.target.value);

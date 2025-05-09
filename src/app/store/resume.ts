@@ -7,7 +7,11 @@ interface ResumeState {
   isAuth: boolean;
   loading: boolean;
   error: object | string | null;
-  fetchResumeData: (password?: string) => Promise<void>;
+  fetchResumeData: (
+    password?: string
+  ) => Promise<
+    { data: ResumeData; code: number; isAuthenticated: boolean } | undefined
+  >;
   clearAuth: () => void;
 }
 
@@ -49,6 +53,11 @@ const useResumeStore = create<ResumeState>()(
                 loading: false,
               });
             }
+            return {
+              data,
+              code,
+              isAuthenticated,
+            };
           } catch (error) {
             set({
               loading: false,
