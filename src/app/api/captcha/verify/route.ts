@@ -1,6 +1,6 @@
 import { getIronSession } from "iron-session";
 import { NextRequest, NextResponse } from "next/server";
-import { SessionData, sessionOptions } from "../route";
+import { SessionData, sessionOptions } from "../lib";
 import { cookies } from "next/headers";
 
 // TODO 需要改为post请求验证

@@ -1,8 +1,7 @@
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
 import svgCaptcha from "svg-captcha";
-import { SessionData, sessionOptions } from "../route";
+import { SessionData, sessionOptions } from "../lib";
 
 // 获取验证码方法
 async function getCaptcha() {
@@ -24,7 +23,6 @@ async function getCaptcha() {
 
 export async function GET() {
   const captcha = await getCaptcha();
-  // console.log("captcha", captcha);
   const cookieStore = await cookies();
   const session = await getIronSession<SessionData>(
     cookieStore,
