@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import useResumeStore from "../store/resume";
+import useResumeStore from "@/app/store/resume";
 import {
   PhoneIcon,
   EnvelopeIcon,
@@ -12,13 +12,13 @@ import {
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
 import "@ant-design/v5-patch-for-react-19";
-import { SectionCard } from "../component/ResumeUI";
+import { SectionCard } from "@/app/component/ResumeUI";
 import { Input, message, Modal, Tooltip } from "antd";
 // import html2canvas from "html2canvas";
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 
-export default function ResumePage() {
+export default function ResumeDemoPage() {
   const { resumeData, error, fetchResumeData } = useResumeStore();
   const [isAuth, setIsAuth] = useState(false);
   const resumeRef = useRef<HTMLDivElement>(null);

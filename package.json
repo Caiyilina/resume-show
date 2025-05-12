@@ -11,17 +11,22 @@
   "dependencies": {
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@heroicons/react": "^2.2.0",
+    "@tsparticles/engine": "^3.8.1",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.8.1",
     "@vercel/postgres": "^0.10.0",
     "antd": "^5.24.9",
     "axios": "^1.9.0",
     "bcrypt": "^5.1.1",
     "html2canvas": "^1.4.1",
     "html2canvas-pro": "^1.5.10",
+    "iron-session": "^8.0.4",
     "jspdf": "^3.0.1",
     "next": "15.3.1",
     "postgres": "^3.4.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "svg-captcha": "^1.4.0",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
