@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { SessionData, sessionOptions } from "../route";
 import { cookies } from "next/headers";
 
-//  post 请求  验证验证码是否正确
+// TODO 需要改为post请求验证
 export async function GET(request: NextRequest) {
   // const { captcha } = await request.json();
   const { searchParams } = new URL(request.url);
@@ -17,9 +17,12 @@ export async function GET(request: NextRequest) {
   console.log("sessionCaptcha", sessionCaptcha);
   console.log("captcha", captcha);
 
-  if (captcha === sessionCaptcha) {
-    return NextResponse.json({ message: "验证码正确" });
+  if (captcha?.toLowerCase() === sessionCaptcha?.toLowerCase()) {
+    return NextResponse.json({
+      message: "验证码正确",
+      isOk: true,
+    });
   } else {
-    return NextResponse.json({ message: "验证码错误" });
+    return NextResponse.json({ message: "验证码错误", isOk: false });
   }
 }

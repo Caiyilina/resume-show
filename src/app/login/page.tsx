@@ -108,8 +108,17 @@ export default function LoginPage() {
             alignItems: "center",
           }}
         >
-          <div className="bg-white text-black shadow-md p-6 rounded-lg">
-            <LoginForm title={"后台管理系统"}></LoginForm>
+          <div className="bg-white text-black shadow-md p-6 rounded-lg z-99">
+            <h1
+              style={{
+                textAlign: "center",
+                marginBottom: 24,
+                color: "#1d1d1d",
+              }}
+            >
+              后台管理系统
+            </h1>
+            <LoginForm></LoginForm>
           </div>
         </div>
       </>
@@ -124,16 +133,7 @@ export default function LoginPage() {
         alignItems: "center",
       }}
     >
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 400,
-          padding: 24,
-          backgroundColor: "#fff",
-          borderRadius: 8,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-        }}
-      >
+      <div className="bg-white text-black shadow-md p-6 rounded-lg z-99">
         <h1 style={{ textAlign: "center", marginBottom: 24, color: "#1d1d1d" }}>
           后台管理系统
         </h1>

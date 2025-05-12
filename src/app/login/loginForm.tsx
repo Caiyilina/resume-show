@@ -2,20 +2,40 @@
 import { Form, Input, Button, Checkbox, message } from "antd";
 import Image from "next/image";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { useCallback, useEffect, useState } from "react";
+import { Spin } from "antd";
 
-// 添加title props
-interface LoginFormProps {
-  title: string;
-}
-export default function LoginForm({ title }: LoginFormProps) {
+export default function LoginForm() {
+  const [captchaUrl, setCaptchaUrl] = useState("");
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
     message.success("登录成功");
   };
+  useEffect(() => {
+    getCaptcha();
+  }, []);
+  const getCaptcha = useCallback(async () => {
+    setCaptchaUrl("");
+    try {
+      const res = await fetch("/api/captcha");
+
+      // 确保请求成功
+      if (res.ok) {
+        const blob = await res.blob(); // 将返回的图像数据转为 Blob
+        const url = URL.createObjectURL(blob); // 创建一个可用于 <img> 的 URL
+        console.log("blob", blob, url);
+
+        setCaptchaUrl(url); // 更新状态以显示验证码
+      } else {
+        console.error("验证码加载失败");
+      }
+    } catch (error) {
+      console.error("请求验证码出错:", error);
+    }
+  }, []);
 
   return (
     <div>
-      {title && <h1 style={{ textAlign: "center" }}>{title}</h1>}
       <Form
         name="normal_login"
         initialValues={{ remember: true }}
@@ -39,13 +59,31 @@ export default function LoginForm({ title }: LoginFormProps) {
         >
           <div style={{ display: "flex", gap: 8 }}>
             <Input placeholder="验证码" />
-            <Image
-              src="/captcha"
-              alt="验证码"
-              width={100}
-              height={40}
-              style={{ border: "1px solid #d9d9d9", borderRadius: 4 }}
-            />
+            {captchaUrl ? (
+              <Image
+                src={captchaUrl}
+                alt="验证码"
+                width={100}
+                height={40}
+                onClick={getCaptcha}
+                style={{
+                  border: "1px solid #d9d9d9",
+                  borderRadius: 4,
+                  cursor: "pointer",
+                }}
+              />
+            ) : (
+              <Spin
+                tip="加载中..."
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: 100,
+                  height: 40,
+                }}
+              />
+            )}
           </div>
         </Form.Item>
         <Form.Item>
