@@ -2,6 +2,7 @@ import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import svgCaptcha from "svg-captcha";
 import { SessionData, sessionOptions } from "../lib";
+import { redirect } from "next/navigation";
 
 // 获取验证码方法
 async function getCaptcha() {

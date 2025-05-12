@@ -17,6 +17,16 @@ export default function LoginForm() {
     console.log("Received values of form: ", values);
     const { username = "", password = "", captcha = "" } = values;
 
+    const verifyResponse = await fetch("/api/captcha/verify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ captcha }),
+    });
+    console.log("verifyResponse--", verifyResponse);
+    return;
+
     const res = await fetch("/api/user/login", {
       method: "POST",
       headers: {
@@ -73,7 +83,7 @@ export default function LoginForm() {
   const getCaptcha = useCallback(async () => {
     setCaptchaUrl("");
     try {
-      const res = await fetch("/api/captcha");
+      const res = await fetch("/api/captcha/get");
 
       // 确保请求成功
       if (res.ok) {
