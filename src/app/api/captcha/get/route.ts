@@ -24,6 +24,7 @@ async function getCaptcha() {
 export async function GET() {
   const captcha = await getCaptcha();
   const cookieStore = await cookies();
+
   const session = await getIronSession<SessionData>(
     cookieStore,
     sessionOptions

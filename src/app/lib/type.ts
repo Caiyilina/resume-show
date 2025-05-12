@@ -1,3 +1,10 @@
+interface User {
+  id?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  createdAt?: string;
+}
 /**
  * 简历核心数据结构
  * @description 包含求职者的完整履历信息，用于生成可视化简历页面
@@ -147,4 +154,4 @@ interface PrivacyConfig {
     };
   };
 }
-export type { ResumeData, PrivacyConfig };
+export type { User, ResumeData, PrivacyConfig };
