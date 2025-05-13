@@ -25,7 +25,16 @@ export default function LoginForm() {
       body: JSON.stringify({ captcha }),
     });
     console.log("verifyResponse--", verifyResponse);
-    return;
+    const verifyData = await verifyResponse.json();
+    console.log("verifyData--", verifyData);
+    if (!verifyData?.isOk) {
+      messageApi.error({
+        content: verifyData.message,
+        key: "login",
+      });
+      setIsLogin(false);
+      return;
+    }
 
     const res = await fetch("/api/user/login", {
       method: "POST",
@@ -76,6 +85,7 @@ export default function LoginForm() {
       });
     }
     setIsRegister(false);
+    setShowRegister(false);
   };
   useEffect(() => {
     getCaptcha();

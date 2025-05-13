@@ -4,7 +4,7 @@ export const sessionOptions = {
   cookieOptions: {
     secure: process.env.NODE_ENV === "production", // 生产环境设为true
     maxAge: 60 * 60 * 1000, // 例如设置过期时间为1小时
-    sameSite: "None",
+    sameSite: "lax",
   },
 };
 export interface SessionData {

@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
   if (!username || !password || !captcha) {
     return NextResponse.json({ message: "字段不能为空", isOk: false });
   }
-
+  /* 
   const verifyResponse = await fetch(
     new URL("/api/captcha/verify", request.url),
     {
@@ -44,23 +44,24 @@ export async function POST(request: NextRequest) {
 
   if (!verifyResult.isOk) {
     return NextResponse.json({ message: "验证码错误" }, { status: 401 });
-  }
+  } */
 
-  const hashedPassword = await bcrypt.hash(password, 10);
   // TODO: 从数据库获取用户信息
   const user = await getUser(username);
-  console.log("hashedPassword", hashedPassword, user[0]);
-
+  console.log("user--", user);
+  if (!user) {
+    return NextResponse.json({ message: "用户不存在" }, { status: 401 });
+  }
   // 验证密码
-  const isPasswordValid = await bcrypt.compare(
-    hashedPassword,
-    user[0].password
-  );
+  const isPasswordValid = await bcrypt.compare(password, user.password);
   console.log("验证结果", isPasswordValid);
 
   if (!isPasswordValid) {
-    return NextResponse.json({ message: "用户名或密码错误" }, { status: 401 });
+    return NextResponse.json(
+      { message: "用户名或密码错误", isOk: false },
+      { status: 401 }
+    );
   }
 
-  return NextResponse.json({ message: "登录成功" });
+  return NextResponse.json({ message: "登录成功", isOk: true });
 }
