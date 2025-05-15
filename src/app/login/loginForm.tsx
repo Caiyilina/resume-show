@@ -87,9 +87,7 @@ export default function LoginForm() {
     setIsRegister(false);
     setShowRegister(false);
   };
-  useEffect(() => {
-    getCaptcha();
-  }, []);
+
   const getCaptcha = useCallback(async () => {
     setCaptchaUrl("");
     try {
@@ -109,7 +107,9 @@ export default function LoginForm() {
       console.error("请求验证码出错:", error);
     }
   }, []);
-
+  useEffect(() => {
+    getCaptcha();
+  }, [captchaUrl, getCaptcha]);
   return (
     <div>
       {contextHolder}
