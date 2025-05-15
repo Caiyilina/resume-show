@@ -10,22 +10,22 @@ const HeaderNav = memo(() => {
   const pathName = usePathname();
   const isHomePage = pathName === "/";
   const navList = [
-    { name: "resume-show", path: "/resume-demo" },
+    { name: "show", path: "/resume-demo" },
     { name: "admin", path: "/admin" },
   ];
   return (
     <div className="flex justify-between items-center p-4 bg-white shadow-md border-b-2 border-gray-100">
-      <div className="flex items-center ml-8">
+      <div className="flex items-center md:ml-8">
         <Image
           src={logo}
           alt="ResumeShow Logo"
-          className="h-8 w-auto"
+          className="h-8 min-w-40 w-auto"
           priority
         />
       </div>
       <nav
         aria-label="Site Nav Bar"
-        className="flex items-center space-x-6 gap-2 text-md font-medium mr-8"
+        className="flex items-center space-x-6 gap-2 text-md font-medium md:mr-8"
       >
         {navList.map((nav) => {
           return (
@@ -47,7 +47,7 @@ const HeaderNav = memo(() => {
             <img
               src={githubIcon.src}
               alt="GitHub"
-              className="h-6 w-6 hover:scale-110 transition-transform duration-200"
+              className="h-8 w-8 sm:h-6 sm:w-6 hover:scale-110 transition-transform duration-200"
             />
           </Link>
         </div>
