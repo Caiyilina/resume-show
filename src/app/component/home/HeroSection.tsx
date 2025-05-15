@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 // TODO 待完善
