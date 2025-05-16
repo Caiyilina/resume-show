@@ -257,6 +257,34 @@ export default function ResumeDemoPage() {
               </div>
             ))}
           </SectionCard>
+
+          {/* 教育背景模块 */}
+          <SectionCard title="教育背景" icon={<LinkIcon />}>
+            {resumeData?.education?.map((edu, index) => (
+              <div key={index} className="space-y-2">
+                <h3 className="text-lg md:text-xl font-semibold text-gray-800  border-l-2 border-blue-400 pl-2">
+                  {edu.school}
+                </h3>
+                {/* 专业、时间 */}
+                <div className="text-gray-600 flex flex-col md:flex-row md:items-center md:gap-2">
+                  <span>{edu.major}</span>
+                  <span className="text-gray-500">{edu.period}</span>
+                </div>
+              </div>
+            ))}
+          </SectionCard>
+          {/* 个人项目 */}
+          <SectionCard title="个人项目" icon={<CodeBracketIcon />}>
+            {resumeData?.personalProjects?.map((project, index) => (
+              <div key={index} className="space-y-2">
+                <h3 className="text-lg md:text-xl font-semibold text-gray-800  border-l-2 border-blue-400 pl-2">
+                  {project.name}
+                </h3>
+                <p className="text-gray-600">{project.url}</p>
+                <p className="text-gray-700">{project.description}</p>
+              </div>
+            ))}
+          </SectionCard>
         </div>
       </div>
       <Modal

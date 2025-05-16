@@ -1,5 +1,3 @@
-import Image from "next/image";
-import { redirect } from "next/navigation";
 import HeroSection from "@/app/component/home/HeroSection";
 import FeaturesSection from "@/app/component/home/FeaturesSection";
 import QASection from "@/app/component/home/QASection";
