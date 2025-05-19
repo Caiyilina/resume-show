@@ -10,18 +10,21 @@ const HeaderNav = memo(() => {
   const pathName = usePathname();
   const isHomePage = pathName === "/";
   const navList = [
-    { name: "show", path: "/resume-demo" },
+    { name: "预览", path: "/resume-demo" },
     { name: "admin", path: "/admin" },
+    { name: "edit", path: "/resume-edit" },
   ];
   return (
     <div className="flex justify-between items-center p-4 bg-white shadow-md border-b-2 border-gray-100">
       <div className="flex items-center md:ml-8">
-        <Image
-          src={logo}
-          alt="ResumeShow Logo"
-          className="h-8 min-w-40 w-auto"
-          priority
-        />
+        <Link href="/">
+          <Image
+            src={logo}
+            alt="ResumeShow Logo"
+            className="h-8 min-w-40 w-auto"
+            priority
+          />
+        </Link>
       </div>
       <nav
         aria-label="Site Nav Bar"

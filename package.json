@@ -26,6 +26,7 @@
     "postgres": "^3.4.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-quill-new": "^3.4.6",
     "svg-captcha": "^1.4.0",
     "zustand": "^5.0.3"
   },
