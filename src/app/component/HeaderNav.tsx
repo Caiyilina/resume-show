@@ -11,8 +11,8 @@ const HeaderNav = memo(() => {
   const isHomePage = pathName === "/";
   const navList = [
     { name: "预览", path: "/resume-demo" },
-    { name: "admin", path: "/admin" },
-    { name: "edit", path: "/resume-edit" },
+    { name: "todo", path: "/" },
+    { name: "edit", path: "/" },
   ];
   return (
     <div className="flex justify-between items-center p-4 bg-white shadow-md border-b-2 border-gray-100">
