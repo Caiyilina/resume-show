@@ -43,7 +43,7 @@ const HeaderNav = memo(() => {
         })}
         <div className="ml-1 mt-1">
           <Link
-            href="https://github.com"
+            href="https://github.com/Caiyilina/resume-show"
             target="_blank"
             rel="noopener noreferrer"
           >

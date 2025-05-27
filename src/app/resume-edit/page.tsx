@@ -3,6 +3,12 @@
 import { useEffect, useState } from "react";
 import { useResumeEditStore } from "../store/resumeEdit";
 import ResumePreview from "./component/ResumePreview";
+import BasicInfoComponent from "./component/BasicInfo";
+import EducationInfoComponent from "./component/EducationInfo";
+import SkillsInfoComponent from "./component/SkillsInfo";
+import ExperienceInfoComponent from "./component/ExperienceInfo";
+import ProjectInfo from "./component/ProjectInfo";
+import ResumeSettingsComponent from "./component/ResumeSettings";
 
 export default function Page() {
   const {
@@ -53,27 +59,27 @@ export default function Page() {
         </h1>
 
         <div className="space-y-8 max-w-4xl mx-auto">
-          <BasicInfo
+          <BasicInfoComponent
             data={resumeData.basic}
             onChange={updateBasicInfo}
             workYears={workYears}
           />
 
-          <EducationInfo
+          <EducationInfoComponent
             data={resumeData.education}
             onChange={updateEducationInfo}
             onAdd={addEducation}
             onRemove={removeEducation}
           />
 
-          <SkillsInfo
+          <SkillsInfoComponent
             data={resumeData.skills}
             onChange={/* 获取技能更新方法 */}
             onAdd={/* 获取添加技能方法 */}
             onRemove={/* 获取删除技能方法 */}
           />
 
-          <ExperienceInfo
+          <ExperienceInfoComponent
             data={resumeData.experience}
             onChange={/* 获取工作经历更新方法 */}
             onAdd={/* 获取添加工作经历方法 */}
@@ -87,7 +93,7 @@ export default function Page() {
             onRemove={/* 获取删除项目方法 */}
           />
 
-          <ResumeSettings
+          <ResumeSettingsComponent
             data={resumeData.settings}
             onChange={/* 获取设置更新方法 */}
           />
